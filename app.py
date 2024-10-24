@@ -9,6 +9,7 @@ sc = pickle.load(open('standscaler.pkl', 'rb'))
 mx = pickle.load(open('minmaxscaler.pkl', 'rb'))
 
 app = Flask(__name__)
+application = app
 
 @app.route('/')
 def index():
