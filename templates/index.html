@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title data-i18n="title">Crop Recommendation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <style>
+      body {
+        transition: background-color 0.5s, color 0.5s;
+      }
+      .light-mode {
+        background: #BCBBB8;
+        color: black;
+      }
+      .dark-mode {
+        background: #121212;
+        color: #ffffff;
+      }
+      h1 {
+        text-align: center;
+      }
+      .warning {
+        color: red;
+        font-weight: bold;
+        text-align: center;
+      }
+      .card {
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: transform 0.5s;
+        background: #798c8fe1; /* Default dark background for card */
+      }
+      .card img {
+        width: 70px;
+        height: 70px;
+      }
+      .card:hover {
+        transform: scale(1.05) rotateY(10deg);
+      }
+      .container {
+        padding-bottom: 10px;
+        border-radius: 15px;
+      }
+      .language-btn {
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+
+  <body class="light-mode">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/" data-i18n="navbar_brand">Crop Recommendation System Using Machine Learning</a>
+        <div class="d-flex">
+          <button class="btn btn-outline-light language-btn" data-lang="en">English</button>
+          <button class="btn btn-outline-light language-btn" data-lang="hi">हिंदी</button>
+          <button class="btn btn-outline-light language-btn" data-lang="mr">मराठी</button>
+          <button class="btn btn-outline-light" id="toggle-mode">Toggle Dark Mode</button>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container my-3 mt-3">
+      <h1 class="text-success" data-i18n="header">Crop Recommendation System<span class="text-success">🌱</span></h1>
+
+      <form action="/predict" method="POST">
+        <div class="row">
+          <div class="col-md-4">
+            <label for="Nitrogen" data-i18n="label_nitrogen">Nitrogen</label>
+            <input type="number" id="Nitrogen" name="Nitrogen" placeholder="Enter Nitrogen" class="form-control" required step="0" data-placeholder="placeholder_nitrogen">
+          </div>
+          <div class="col-md-4">
+            <label for="Phosporus" data-i18n="label_phosphorus">Phosphorus</label>
+            <input type="number" id="Phosporus" name="Phosporus" placeholder="Enter Phosphorus" class="form-control" required step="00" data-placeholder="placeholder_phosphorus">
+          </div>
+          <div class="col-md-4">
+            <label for="Potassium" data-i18n="label_potassium">Potassium</label>
+            <input type="number" id="Potassium" name="Potassium" placeholder="Enter Potassium" class="form-control" required step="0" data-placeholder="placeholder_potassium">
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <label for="Temperature" data-i18n="label_temperature">Temperature</label>
+            <input type="number" step="0.01" id="Temperature" name="Temperature" placeholder="Enter Temperature in °C" class="form-control" required data-placeholder="placeholder_temperature">
+          </div>
+          <div class="col-md-4">
+            <label for="Humidity" data-i18n="label_humidity">Humidity</label>
+            <input type="number" step="0.01" id="Humidity" name="Humidity" placeholder="Enter Humidity in %" class="form-control" required data-placeholder="placeholder_humidity">
+          </div>
+          <div class="col-md-4">
+            <label for="pH" data-i18n="label_ph">pH</label>
+            <input type="number" step="0.01" id="pH" name="pH" placeholder="Enter pH value" class="form-control" required data-placeholder="placeholder_ph">
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <label for="Rainfall" data-i18n="label_rainfall">Rainfall</label>
+            <input type="number" step="0.01" id="Rainfall" name="Rainfall" placeholder="Enter Rainfall in mm" class="form-control" required data-placeholder="placeholder_rainfall">
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-12 text-center">
+            <button type="submit" class="btn btn-primary btn-lg" data-i18n="button_submit">Get Recommendation</button>
+          </div>
+        </div>
+      </form>
+
+      {% if result %}
+        <div class="card">
+          <img src="{{url_for('static', filename='crop.png')}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title" data-i18n="result_title">Recommended Crop for Cultivation is:</h5>
+            <p class="card-text">{{ result }}</p>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script>
+      // Translation dictionaries
+      const translations = {
+        en: {
+          title: "Crop Recommendation System",
+          navbar_brand: "Crop Recommendation System Using Machine Learning",
+          header: "Crop Recommendation System🌱",
+          label_nitrogen: "Nitrogen",
+          placeholder_nitrogen: "Enter Nitrogen",
+          label_phosphorus: "Phosphorus",
+          placeholder_phosphorus: "Enter Phosphorus",
+          label_potassium: "Potassium",
+          placeholder_potassium: "Enter Potassium",
+          label_temperature: "Temperature",
+          placeholder_temperature: "Enter Temperature in °C",
+          label_humidity: "Humidity",
+          placeholder_humidity: "Enter Humidity in %",
+          label_ph: "pH",
+          placeholder_ph: "Enter pH value",
+          label_rainfall: "Rainfall",
+          placeholder_rainfall: "Enter Rainfall in mm",
+          button_submit: "Get Recommendation",
+          result_title: "Recommended Crop for Cultivation is:"
+        },
+        hi: {
+          title: "फसल सिफारिश प्रणाली",
+          navbar_brand: "मशीन लर्निंग का उपयोग करके फसल सिफारिश प्रणाली",
+          header: "फसल सिफारिश प्रणाली🌱",
+          label_nitrogen: "नाइट्रोजन",
+          placeholder_nitrogen: "नाइट्रोजन दर्ज करें",
+          label_phosphorus: "फॉस्फोरस",
+          placeholder_phosphorus: "फॉस्फोरस दर्ज करें",
+          label_potassium: "पोटेशियम",
+          placeholder_potassium: "पोटेशियम दर्ज करें",
+          label_temperature: "तापमान",
+          placeholder_temperature: "°C में तापमान दर्ज करें",
+          label_humidity: "नमी",
+          placeholder_humidity: "नमी (%) दर्ज करें",
+          label_ph: "पीएच",
+          placeholder_ph: "पीएच मान दर्ज करें",
+          label_rainfall: "वर्षा",
+          placeholder_rainfall: "मिमी में वर्षा दर्ज करें",
+          button_submit: "सिफारिश प्राप्त करें",
+          result_title: "कृषि के लिए अनुशंसित फसल है:"
+        },
+        mr: {
+          title: "पीक शिफारसी प्रणाली",
+          navbar_brand: "मशीन लर्निंग वापरून पीक शिफारसी प्रणाली",
+          header: "पीक शिफारसी प्रणाली🌱",
+          label_nitrogen: "नायट्रोजन",
+          placeholder_nitrogen: "नायट्रोजन प्रविष्ट करा",
+          label_phosphorus: "फॉस्फरस",
+          placeholder_phosphorus: "फॉस्फरस प्रविष्ट करा",
+          label_potassium: "पोटॅशियम",
+          placeholder_potassium: "पोटॅशियम प्रविष्ट करा",
+          label_temperature: "तापमान",
+          placeholder_temperature: "°C मध्ये तापमान प्रविष्ट करा",
+          label_humidity: "आर्द्रता",
+          placeholder_humidity: "आर्द्रता (%) प्रविष्ट करा",
+          label_ph: "पीएच",
+          placeholder_ph: "पीएच मूल्य प्रविष्ट करा",
+          label_rainfall: "पाऊस",
+          placeholder_rainfall: "मिमी मध्ये पाऊस प्रविष्ट करा",
+          button_submit: "शिफारसी मिळवा",
+          result_title: "कृषीसाठी शिफारस केलेली पीक आहे:"
+        }
+      };
+
+      // Function to update the text based on selected language
+      function updateLanguage(lang) {
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+          const key = element.getAttribute('data-i18n');
+          if (translations[lang][key]) {
+            element.textContent = translations[lang][key];
+          }
+        });
+
+        // Update placeholders
+        document.querySelectorAll('[data-placeholder]').forEach(element => {
+          const key = element.getAttribute('data-placeholder');
+          if (translations[lang][key]) {
+            element.setAttribute('placeholder', translations[lang][key]);
+          }
+        });
+
+        // Update the page title
+        document.title = translations[lang]['title'];
+      }
+
+      // Initialize language based on localStorage or default to English
+      let currentLang = localStorage.getItem('language') || 'en';
+      updateLanguage(currentLang);
+
+      // Add event listeners to language buttons
+      document.querySelectorAll('.language-btn').forEach(button => {
+        button.addEventListener('click', () => {
+          const selectedLang = button.getAttribute('data-lang');
+          currentLang = selectedLang;
+          updateLanguage(selectedLang);
+          localStorage.setItem('language', selectedLang);
+        });
+      });
+
+      // Dark mode toggle
+      // Check for saved mode in localStorage
+      const isDarkMode = localStorage.getItem('darkMode') === 'true';
+      if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        document.body.classList.remove('light-mode');
+      }
+
+      const toggleButton = document.getElementById('toggle-mode');
+      toggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        document.body.classList.toggle('light-mode');
+        
+        // Save the mode to localStorage
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+      });
+    </script>
+  </body>
+</html>
