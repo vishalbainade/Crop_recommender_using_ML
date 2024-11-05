@@ -66,7 +66,7 @@
     <div class="container my-3 mt-3">
       <h1 class="text-success" data-i18n="header">Crop Recommendation System<span class="text-success">🌱</span></h1>
 
-      <form action="/predict" method="POST">
+<!--      <form action="/predict" method="POST">
         <div class="row">
           <div class="col-md-4">
             <label for="Nitrogen" data-i18n="label_nitrogen">Nitrogen</label>
@@ -110,7 +110,53 @@
           </div>
         </div>
       </form>
+-->
+<form action="/predict" method="POST">
+  <div class="row">
+    <div class="col-md-4">
+      <label for="Nitrogen" data-i18n="label_nitrogen">Nitrogen</label>
+      <input type="number" id="Nitrogen" name="Nitrogen" placeholder="Enter Nitrogen (0-100)" class="form-control" required step="1" min="0" max="100" data-placeholder="placeholder_nitrogen">
+    </div>
+    <div class="col-md-4">
+      <label for="Phosporus" data-i18n="label_phosphorus">Phosphorus</label>
+      <input type="number" id="Phosporus" name="Phosporus" placeholder="Enter Phosphorus (0-100)" class="form-control" required step="1" min="0" max="100" data-placeholder="placeholder_phosphorus">
+    </div>
+    <div class="col-md-4">
+      <label for="Potassium" data-i18n="label_potassium">Potassium</label>
+      <input type="number" id="Potassium" name="Potassium" placeholder="Enter Potassium (0-100)" class="form-control" required step="1" min="0" max="100" data-placeholder="placeholder_potassium">
+    </div>
+  </div>
 
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <label for="Temperature" data-i18n="label_temperature">Temperature</label>
+      <input type="number" step="0.01" id="Temperature" name="Temperature" placeholder="Enter Temperature in °C (15-50)" class="form-control" required min="15" max="50" data-placeholder="placeholder_temperature">
+    </div>
+    <div class="col-md-4">
+      <label for="Humidity" data-i18n="label_humidity">Humidity</label>
+      <input type="number" step="0.01" id="Humidity" name="Humidity" placeholder="Enter Humidity in % (0-100)" class="form-control" required min="0" max="100" data-placeholder="placeholder_humidity">
+    </div>
+    <div class="col-md-4">
+      <label for="pH" data-i18n="label_ph">pH</label>
+      <input type="number" step="0.01" id="pH" name="pH" placeholder="Enter pH value (2-7.99)" class="form-control" required min="2" max="7.99" data-placeholder="placeholder_ph">
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <label for="Rainfall" data-i18n="label_rainfall">Rainfall</label>
+      <input type="number" step="0.01" id="Rainfall" name="Rainfall" placeholder="Enter Rainfall in mm (0-300)" class="form-control" required min="0" max="300" data-placeholder="placeholder_rainfall">
+    </div>
+  </div>
+
+  <div class="row mt-4">
+    <div class="col-md-12 text-center">
+      <button type="submit" class="btn btn-primary btn-lg" data-i18n="button_submit">Get Recommendation</button>
+    </div>
+  </div>
+</form>
+
+      
       {% if result %}
         <div class="card">
           <img src="{{url_for('static', filename='crop.png')}}" class="card-img-top" alt="...">
